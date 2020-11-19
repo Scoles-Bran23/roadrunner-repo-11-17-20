@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="OpModeAnnotationProcessor">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/roadrunner-11-17-20/TeamCode/lib/OpModeAnnotationProcessor.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
