@@ -84,3 +84,15 @@ public class DriveConstants {
         return 32767 / ticksPerSecond;
     }
 }
+// katie can you see this?
+//yessss!!!
+//we can type like google docs
+//Mr. Witman can you see this?
+//waayyyyy easier
+//we still need android studio to run it sadly
+//but we can work all in the browser
+//i just checked, it
+//this should be easier
+//can we maybe abandon android studio
+//oh come on
+//we can copy and paste and stuff instead
