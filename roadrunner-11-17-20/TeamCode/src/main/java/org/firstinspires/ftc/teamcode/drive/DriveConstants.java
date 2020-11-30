@@ -91,8 +91,15 @@ public class DriveConstants {
 //waayyyyy easier
 //we still need android studio to run it sadly
 //but we can work all in the browser
-//i just checked, it
+//i just checked, no copy pasting
+//you just push changes to github
+//and it shows up in android studio
+//yeah it's hooked up to version control
+//so you can also revert changes and stuff
+//i already added a couple committs
 //this should be easier
 //can we maybe abandon android studio
 //oh come on
-//we can copy and paste and stuff instead
+//ok chesney try a commit
+
+//ooooooohhh this is like a github extension almost
