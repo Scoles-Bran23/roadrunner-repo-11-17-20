@@ -40,10 +40,16 @@ import com.qualcomm.robotcore.util.Range;
 @Disabled
 public class CuriosityTeleOp extends LinearOpMode {
 
+    //last year's auto code
+    //https://drive.google.com/drive/u/1/folders/1t2_lAwFfjKIcn_lX6ayanWx7Nz-9Ct1v
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor leftFront = null;
+    private DcMotor rightFront = null;
+    private DcMotor leftBack = null;
+    private DcMotor rightBack = null;
+
+    
 
     @Override
     public void runOpMode() {
@@ -53,13 +59,16 @@ public class CuriosityTeleOp extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-
+        leftFront  = hardwareMap.get(DcMotor.class, "drivetrainFrontLeft");
+        leftBack = hardwareMap.get(DcMotor.class, "drivetrainBackLeft");
+        rightFront  = hardwareMap.get(DcMotor.class, "drivetrainFrontRight");
+        rightBack = hardwareMap.get(DcMotor.class, "drivetrainBackRight");
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
