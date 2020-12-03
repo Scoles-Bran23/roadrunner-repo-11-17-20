@@ -37,15 +37,32 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="UG TeleOp", group="Linear Opmode")
-@Disabled
+//@Disabled
 public class CuriosityTeleOp extends LinearOpMode {
     //telep code from last year: https://drive.google.com/drive/u/1/folders/1t2_lAwFfjKIcn_lX6ayanWx7Nz-9Ct1v
     //sorry it is really messy
     
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+
+    //Drivetrain
+    private DcMotor drivetrainFrontLeft = null;
+    private Dcmotor drivetrainFrontRight = null;
+    private DcMotor drivetrainBackLeft = null;
+    private DcMotor drivetrainBackRight = null;
+    
+    //Shooter
+    private DcMotor frontShooter = null;
+    private DcMotor backShooter = null;
+    private Servo shooterServo = null;
+    
+    //Intake
+    private DcMotor intake = null;
+
+    //arm and claw - wobbleLeft, wobbleRight, wobbleClaw
+    private Servo wobbleLeft = null;
+    private Servo wobbleRight = null;    
+    private Servo wobbleClaw = null;
 
     @Override
     public void runOpMode() {
@@ -55,13 +72,35 @@ public class CuriosityTeleOp extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        //Drivetrain
+        drivetrainFrontLeft = hardwareMap.get(DcMotor.class, "drivetrainFrontLeft");
+        drivetrainFrontRight = hardwareMap.get(DcMotor.class, "drivetrainFrontRight");
+        drivetrainBackLeft = hardwareMap.get(DcMotor.class, "drivetrainBackLeft");
+        drivetrainBackRight = hardwareMap.get(DcMotor.class, "drivetrainBackRight");
+        
+        //setting drivetrain Motors        
+        drivetrainFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        drivetrainFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drivetrainFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        drivetrainFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drivetrainBackLeft.setDirection(DcMotor.Direction.REVERSE);
+        drivetrainBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drivetrainBackRight.setDirection(DcMotor.Direction.FORWARD);
+        drivetrainBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        
+        //Shooter
+        frontShooter = hardwareMap.get(DcMotor.class, "frontShooter");
+        backShooter = hardwareMap.get(DcMotor.class, "backShooter");
+        shooterServo = hardwareMap.get(Servo.class, "shooterServo");
+
+        //Intake
+        
+
+        //wobble
+        wobbleLeft = hardwareMap.get(Servo.class, "")
+        wobbleRight = hardwareMap.get(Servo.class, "wobbleRight");
+        wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw")
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -69,33 +108,65 @@ public class CuriosityTeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
-
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
-
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
+        
+            //mecanum wheels code stuff
+            double drivetrainLeftFrontPower;
+            double drivetrainLeftBackPower;
+            double drivetrainRightFrontPower;
+            double drivetrainRightBackPower;
+            
             double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double turn = gamepad1.right_stick_x;
+            double strafe = gamepad1.left_stick_x;
+            
+            if(gamepad1.right_bumper) {
+                drivetrainLeftFrontPower = Range.clip(drive + turn + strafe, -.3, .3);
+                drivetrainRightFrontPower = Range.clip(drive - turn - strafe, -.3, .3);
+                drivetrainRightBackPower = Range.clip(drive - turn + strafe, -.3, .3);
+                drivetrainLeftBackPower = Range.clip(drive + turn - strafe, -.3, .3);
+            } else {
+                drivetrainLeftFrontPower = Range.clip(drive + turn + strafe, -1, 1);
+                drivetrainRightFrontPower = Range.clip(drive - turn - strafe, -1, 1);
+                drivetrainRightBackPower = Range.clip(drive - turn + strafe, -1, 1);
+                drivetrainLeftBackPower = Range.clip(drive + turn - strafe, -1, 1);
+            }
+            
+            drivetrainFrontLeft.setPower(drivetrainLeftFrontPower);
+            frontRight.setPower(rightFrontPower);
+            backLeft.setPower(leftBackPower);
+            backRight.setPower(rightBackPower);
+            
+            
+            telemetry.addData("leftFrontPower: ", leftFrontPower);
+            telemetry.addData("rightFrontPower: ", rightFrontPower);
+            telemetry.addData("leftBackPower: ", leftBackPower);
+            telemetry.addData("rightBackPower: ", rightBackPower);
 
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
 
-            // Send calculated power to wheels
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
+            
+            //Shooter 
+            if (gamepad1.dpad_up)//turn shooter on, set both shooter motors to power .9
+            {
+              frontShooter.setPower(0.9);
+              backShooter.setPower(0.9);
+            } else {
+              frontShooter.setPower(0);
+              backShooter.setPower(0);
+            }
+            
+             
+             
+             if (gamepad1.dpad_right)
+             {
+             servoShooter.setPosition(.5)
+             }
+             else 
+             (
+               servoShooter 
+             )
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }
