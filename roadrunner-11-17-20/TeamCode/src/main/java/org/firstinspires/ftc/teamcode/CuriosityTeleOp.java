@@ -46,14 +46,14 @@ public class CuriosityTeleOp extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Drivetrain
-    private DcMotor drivetrainFrontLeft = null;
-    private Dcmotor drivetrainFrontRight = null;
-    private DcMotor drivetrainBackLeft = null;
-    private DcMotor drivetrainBackRight = null;
+    private DcMotor frontLeft = null;
+    private Dcmotor frontRight = null;
+    private DcMotor backLeft = null;
+    private DcMotor backRight = null;
     
     //Shooter
-    private DcMotor frontShooter = null;
-    private DcMotor backShooter = null;
+    private DcMotor shooterFront = null;
+    private DcMotor shooterBack = null;
     private Servo shooterServo = null;
     
     //Intake
@@ -74,33 +74,34 @@ public class CuriosityTeleOp extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
 
         //Drivetrain
-        drivetrainFrontLeft = hardwareMap.get(DcMotor.class, "drivetrainFrontLeft");
-        drivetrainFrontRight = hardwareMap.get(DcMotor.class, "drivetrainFrontRight");
-        drivetrainBackLeft = hardwareMap.get(DcMotor.class, "drivetrainBackLeft");
-        drivetrainBackRight = hardwareMap.get(DcMotor.class, "drivetrainBackRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "drivetrainFrontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "drivetrainFrontRight");
+        backLeft = hardwareMap.get(DcMotor.class, "drivetrainBackLeft");
+        backRight = hardwareMap.get(DcMotor.class, "drivetrainBackRight");
         
         //setting drivetrain Motors        
-        drivetrainFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        drivetrainFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drivetrainFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        drivetrainFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drivetrainBackLeft.setDirection(DcMotor.Direction.REVERSE);
-        drivetrainBackLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        drivetrainBackRight.setDirection(DcMotor.Direction.FORWARD);
-        drivetrainBackRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         
         //Shooter
-        frontShooter = hardwareMap.get(DcMotor.class, "frontShooter");
-        backShooter = hardwareMap.get(DcMotor.class, "backShooter");
+        shooterFront = hardwareMap.get(DcMotor.class, "shooterFront");
+        shooterBack = hardwareMap.get(DcMotor.class, "shooterBack");
         shooterServo = hardwareMap.get(Servo.class, "shooterServo");
 
         //Intake
-        
+        intake = hardwareMap.get
+        (DcMotor.class, "intake");
 
         //wobble
-        wobbleLeft = hardwareMap.get(Servo.class, "")
+        wobbleLeft = hardwareMap.get(Servo.class, "wobbleLeft");
         wobbleRight = hardwareMap.get(Servo.class, "wobbleRight");
-        wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw")
+        wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -110,61 +111,89 @@ public class CuriosityTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
         
             //mecanum wheels code stuff
-            double drivetrainLeftFrontPower;
-            double drivetrainLeftBackPower;
-            double drivetrainRightFrontPower;
-            double drivetrainRightBackPower;
+            double frontLeftPower;
+            double backLeftPower;
+            double frontRightPower;
+            double backRightPower;
             
             double drive = -gamepad1.left_stick_y;
             double turn = gamepad1.right_stick_x;
             double strafe = gamepad1.left_stick_x;
             
             if(gamepad1.right_bumper) {
-                drivetrainLeftFrontPower = Range.clip(drive + turn + strafe, -.3, .3);
-                drivetrainRightFrontPower = Range.clip(drive - turn - strafe, -.3, .3);
-                drivetrainRightBackPower = Range.clip(drive - turn + strafe, -.3, .3);
-                drivetrainLeftBackPower = Range.clip(drive + turn - strafe, -.3, .3);
+                frontLeftPower = Range.clip(drive + turn + strafe, -.3, .3);
+                frontRightPower = Range.clip(drive - turn - strafe, -.3, .3);
+                backRightkPower = Range.clip(drive - turn + strafe, -.3, .3);
+                backLeftPower = Range.clip(drive + turn - strafe, -.3, .3);
             } else {
-                drivetrainLeftFrontPower = Range.clip(drive + turn + strafe, -1, 1);
-                drivetrainRightFrontPower = Range.clip(drive - turn - strafe, -1, 1);
-                drivetrainRightBackPower = Range.clip(drive - turn + strafe, -1, 1);
-                drivetrainLeftBackPower = Range.clip(drive + turn - strafe, -1, 1);
+                frontLeftPower = Range.clip(drive + turn + strafe, -1, 1);
+                frontRightPower = Range.clip(drive - turn - strafe, -1, 1);
+                backRightPower = Range.clip(drive - turn + strafe, -1, 1);
+                backLeftPower = Range.clip(drive + turn - strafe, -1, 1);
             }
             
-            drivetrainFrontLeft.setPower(drivetrainLeftFrontPower);
-            frontRight.setPower(rightFrontPower);
-            backLeft.setPower(leftBackPower);
-            backRight.setPower(rightBackPower);
+            frontLeft.setPower(drivetrainFrontLeftPower);
+            frontRight.setPower(drivetrainFrontRightPower);
+            backLeft.setPower(drivetrainBackLeftPower);
+            backLeft.setPower(rightBackPower);
             
             
-            telemetry.addData("leftFrontPower: ", leftFrontPower);
-            telemetry.addData("rightFrontPower: ", rightFrontPower);
-            telemetry.addData("leftBackPower: ", leftBackPower);
-            telemetry.addData("rightBackPower: ", rightBackPower);
-
-
+            telemetry.addData("FrontLeftPower: ", drivetrainFrontLeftPower);
+            telemetry.addData("FrontRightPower: ", drivetrainFrontRightPower);
+            telemetry.addData("BackLeftPower: ", drivetrainBackLeftPower);
+            telemetry.addData("BackRightPower: ", drivetrainBackRightPower);
             
             //Shooter 
             if (gamepad1.dpad_up)//turn shooter on, set both shooter motors to power .9
             {
-              frontShooter.setPower(0.9);
-              backShooter.setPower(0.9);
-            } else {
-              frontShooter.setPower(0);
-              backShooter.setPower(0);
+              shooterFront.setPower(0.9);
+              shooterBack.setPower(0.9);
+            } 
+            else 
+            {
+              shooterFront.setPower(0);
+              shooterBack.setPower(0);
             }
             
-             
-             
-             if (gamepad1.dpad_right)
+             if (gamepad1.right_bumper)//Shooter servo 
              {
-             servoShooter.setPosition(.5)
+                shooterServo.setPosition(0.5);
              }
              else 
-             (
-               servoShooter 
-             )
+             {
+                shooterServo.setPosition(0);
+             }
 
+             //Intake
+             if (gamepad1.right_trigger > 0.2)
+             {
+               intake.setPower(0.3);
+             }
+             if (gamepad1.y)
+             {
+               intake.setPower(-0.3);
+             }
+             else
+               intake.setPower(0.0);
+             }
+            
+             //wobble claw open/close
+             if (gamepad1.left_bumper)
+             {
+               wobbleClaw.setPosition(0.5); // might need to change values but this should be open
+             }
+             else
+             {
+               wobbleClaw.setPosition(0); // close claw
+             }
+            /*
+             //wobble arm to be contt
+             if 
+
+             
+
+            */
+            
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
