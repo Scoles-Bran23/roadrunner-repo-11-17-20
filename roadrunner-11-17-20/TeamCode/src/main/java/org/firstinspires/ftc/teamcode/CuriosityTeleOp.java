@@ -39,7 +39,8 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="UG TeleOp", group="Linear Opmode")
 @Disabled
 public class CuriosityTeleOp extends LinearOpMode {
-
+    //telep code from last year: https://drive.google.com/drive/u/1/folders/1t2_lAwFfjKIcn_lX6ayanWx7Nz-9Ct1v
+    
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
