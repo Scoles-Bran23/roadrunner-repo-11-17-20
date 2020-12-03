@@ -132,16 +132,16 @@ public class CuriosityTeleOp extends LinearOpMode {
                 backLeftPower = Range.clip(drive + turn - strafe, -1, 1);
             }
             
-            frontLeft.setPower(drivetrainFrontLeftPower);
-            frontRight.setPower(drivetrainFrontRightPower);
-            backLeft.setPower(drivetrainBackLeftPower);
-            backLeft.setPower(rightBackPower);
+            frontLeft.setPower(frontLeftPower);
+            frontRight.setPower(frontRightPower);
+            backLeft.setPower(backLeftPower);
+            backLeft.setPower(backRightPower);
             
             
-            telemetry.addData("FrontLeftPower: ", drivetrainFrontLeftPower);
-            telemetry.addData("FrontRightPower: ", drivetrainFrontRightPower);
-            telemetry.addData("BackLeftPower: ", drivetrainBackLeftPower);
-            telemetry.addData("BackRightPower: ", drivetrainBackRightPower);
+            telemetry.addData("FrontLeftPower: ", frontLeftPower);
+            telemetry.addData("FrontRightPower: ", frontRightPower);
+            telemetry.addData("BackLeftPower: ", backLeftPower);
+            telemetry.addData("BackRightPower: ", backRightPower);
             
             //Shooter 
             if (gamepad1.dpad_up)//turn shooter on, set both shooter motors to power .9
@@ -187,10 +187,17 @@ public class CuriosityTeleOp extends LinearOpMode {
                wobbleClaw.setPosition(0); // close claw
              }
             /*
-             //wobble arm to be contt
+             //wobble arm to be continued...I need to commit it
              if 
 
-             
+             initialize to stowed position 
+
+             hit trigger go to down position 
+             hit trigger 2x to lift above wall
+
+             one servo will start @ 0 and one servo will start @ 1 (stowed position)
+
+             e position would have same changes applies so +- 0.4
 
             */
             
