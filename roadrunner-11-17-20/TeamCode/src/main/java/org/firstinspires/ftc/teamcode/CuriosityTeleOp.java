@@ -26,8 +26,8 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*
-package org.firstinspires.ftc.robotcontroller.external.samples;
+
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -48,15 +48,18 @@ public class CuriosityTeleOp extends LinearOpMode {
 
     //Drivetrain
     private DcMotor frontLeft = null;
-    private Dcmotor frontRight = null;
+    private DcMotor frontRight = null;
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
-    
+
+
     //Shooter
     private DcMotor shooterFront = null;
     private DcMotor shooterBack = null;
     private Servo shooterServo = null;
-    
+
+
+
     //Intake
     private DcMotor intake = null;
 
@@ -124,7 +127,7 @@ public class CuriosityTeleOp extends LinearOpMode {
             if(gamepad1.right_bumper) {
                 frontLeftPower = Range.clip(drive + turn + strafe, -.3, .3);
                 frontRightPower = Range.clip(drive - turn - strafe, -.3, .3);
-                backRightkPower = Range.clip(drive - turn + strafe, -.3, .3);
+                backRightPower = Range.clip(drive - turn + strafe, -.3, .3);
                 backLeftPower = Range.clip(drive + turn - strafe, -.3, .3);
             } else {
                 frontLeftPower = Range.clip(drive + turn + strafe, -1, 1);
@@ -199,12 +202,11 @@ public class CuriosityTeleOp extends LinearOpMode {
              one servo will start @ 0 and one servo will start @ 1 (stowed position)
 
              e position would have same changes applies so +- 0.4
-
             */
+
             
             // Show the elapsed game time and wheel power.
-            //telemetry.addData("Status", "Run Time: " + runtime.toString());
-            //telemetry.update();
-        //}
-    //}
-//*/
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.update();
+       }
+    }
