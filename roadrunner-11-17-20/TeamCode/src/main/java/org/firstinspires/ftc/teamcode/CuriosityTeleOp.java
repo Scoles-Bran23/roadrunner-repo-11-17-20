@@ -52,14 +52,14 @@ public class CuriosityTeleOp extends LinearOpMode {
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
 
-
+/*
     //Shooter
     private DcMotor shooterFront = null;
     private DcMotor shooterBack = null;
     private Servo shooterServo = null;
 
-
-
+*/
+/*
     //Intake
     private DcMotor intake = null;
 
@@ -67,7 +67,7 @@ public class CuriosityTeleOp extends LinearOpMode {
     private Servo wobbleLeft = null;
     private Servo wobbleRight = null;    
     private Servo wobbleClaw = null;
-
+*/
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -92,7 +92,7 @@ public class CuriosityTeleOp extends LinearOpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        
+ /*
         //Shooter
         shooterFront = hardwareMap.get(DcMotor.class, "shooterFront");
         shooterBack = hardwareMap.get(DcMotor.class, "shooterBack");
@@ -106,7 +106,7 @@ public class CuriosityTeleOp extends LinearOpMode {
         wobbleLeft = hardwareMap.get(Servo.class, "wobbleLeft");
         wobbleRight = hardwareMap.get(Servo.class, "wobbleRight");
         wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw");
-
+*/
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -146,7 +146,8 @@ public class CuriosityTeleOp extends LinearOpMode {
             telemetry.addData("FrontRightPower: ", frontRightPower);
             telemetry.addData("BackLeftPower: ", backLeftPower);
             telemetry.addData("BackRightPower: ", backRightPower);
-            
+
+            /*
             //Shooter 
             if (gamepad1.dpad_up)//turn shooter on, set both shooter motors to power .9
             {
@@ -190,6 +191,8 @@ public class CuriosityTeleOp extends LinearOpMode {
              {
                wobbleClaw.setPosition(0); // close claw
              }
+             */
+
             /*
              //wobble arm to be continued...I need to commit it
              if 
