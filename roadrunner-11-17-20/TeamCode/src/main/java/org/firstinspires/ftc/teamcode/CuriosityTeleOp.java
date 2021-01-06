@@ -212,4 +212,4 @@ public class CuriosityTeleOp extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
        } } }
-        
+
